@@ -11,7 +11,7 @@ void prodVett(int vetS[], int *vetD[], int n){
 int * sommaVett(int vetS[], int *vetD[], int n){
 	int i;
 	int *vetSomma;
-	vetSomma = malloc(n * sizeof(int));
+	vetSomma = (int *)malloc(n * sizeof(int));
 	for(i = 0; i < n; i++){
 		vetSomma[i] = vetS[i] + vetD[i];
 	}
@@ -63,10 +63,7 @@ int main() {
 	stampaStatica(vetStatic, n);
 	int *p = sommaVett(vetStatic, vetDin, n);
     printf("\nStampa vettore dopo somma...");
-    for(i = 0; i < n; i++){
-        printf("%d. Valore = %d", i, *p);
-    }
-	//stampaDinamica(p, n);
+	stampaDinamica(p, n);
     printf("\nStampa vettore dopo prodotto...");
 	prodVett(vetStatic, vetDin, n);
 	stampaStatica(vetStatic, n);

@@ -53,42 +53,25 @@ Nodo * merge_list(Nodo * head1, Nodo * head2){
     return newNodo;
 }
 
-void merge_list_same(Nodo * head1, Nodo * head2){
+void merge_list_same(Nodo *head1, Nodo *head2){
     int flag = 1;
     while(head1 != NULL || head2 != NULL){
         if(flag == 1){
-            //current1->val = current1->val;
-            //current1->next = current1->next;
-            head1 = head1->next;
             flag = 0;
         }
         else{
             head1->val = head2->val;
-            head1 = head1->next;
             head2 = head2->next;
             flag = 1;
         }
+        head1 = head1->next;
     }
 }
-/*
-Nodo * caricamentoLista(Nodo *root){
-    Nodo *head = root;
-    int num;
-    do{
-        printf("\nInserisci il valore: ");
-        scanf("%d", &num);
-        push(head, num);
-    }while(num != 0);
-    return head;
-}
-*/
 
 int main(){
     int num, i;
     Nodo *root1 = NULL;
     Nodo *root2 = NULL;
-    //root2 = malloc(sizeof(Nodo));
-    //root1 = malloc(sizeof(Nodo));
     printf("\nCaricamento Lista 1... (inserisci 0 per terminare)");
     for(i = 0; i < 5; i++){
         printf("\nInserire il valore: ");
@@ -112,7 +95,7 @@ int main(){
     print_list(merge_lista);
 
     printf("\nMerge su lista 1...");
-    merge_list_same(root1, root2);
+    merge_list_same(&root1, &root2);
     printf("\nStampa lista merge su lista 1...");
     print_list(root1);
     return 0;

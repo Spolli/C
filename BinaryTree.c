@@ -128,13 +128,38 @@ int RicercaBinaria(int x, Nodo *first){
 	}
 }
 
+int countTwoChildren(Nodo *first){
+    if(first == NULL) {
+        return 0;
+    }
+    if(first->Sx != NULL && first->Dx != NULL) {
+        return 1 + countTwoChildren(first->Sx) + countTwoChildren(first->Dx);
+    }
+    return countTwoChildren(first->Sx) + countTwoChildren(first->Dx);
+}
+
+void printTwoChildren(Nodo *first){
+    if(first == NULL) {
+        return 0;
+    }
+    if(first->Sx != NULL && first->Dx != NULL) {
+        printf("\nValore Nodo con 2 figli: %d", first->dato);
+        printTwoChildren(first->Sx);
+        printTwoChildren(first->Dx);
+    }
+    printTwoChildren(first->Sx);
+    printTwoChildren(first->Dx);
+}
+
 int main(){
     int n, i;
     Nodo *root = NULL;
     for(i = 0; i < 5; i++){
-        printf("Inserire il valore: ");
+        printf("\nInserire il valore: ");
         scanf("%d", &n);
         root = Ins_Ord(n, root);
     }
     Inorder(root);
+    printf("\nIl numero dei nodi con 2 figli sono = %d", countTwoChildren(root));
+    printTwoChildren(root);
 }

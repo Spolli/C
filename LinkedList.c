@@ -2,140 +2,101 @@
 #include <stdlib.h>
 
 typedef struct structNodo{
-  int dato; //albero di valori interi
-  struct nodo *Dx; //puntatore al sottoalbero destro
-  struct nodo *Sx; //puntatore al sottoalbero sinistro
+    int val;
+    struct structNodo *next;
 }Nodo;
 
-void Inorder(Nodo *first){
-	if (first != NULL) {
-		Inorder(first->Sx);
-		printf("%d \t", first->dato);
-		Inorder(first->Dx);
+Nodo * push(Nodo *first, int valore){
+    Nodo *newNodo = malloc(sizeof(Nodo));
+    newNodo->val = valore;
+    newNodo->next = NULL;
+    if(first == NULL)
+        first = newNodo;
+    else{
+        Nodo *p = first;
+        while(p->next != NULL)
+            p = p->next;
+        p->next = newNodo;
+    }
+    return first;
+}
+
+void print_list(Nodo * head) {
+    if(head == NULL)
+        printf("\nLista vuota!");
+    else{
+        Nodo *p = head;
+        while(p != NULL){
+            printf("\nValore = %d", p->val);
+            p = p->next;
+        }
     }
 }
 
-
-void Preorder(Nodo *first){
-	if (first != NULL) {
-        printf("%d \t", first->dato);
-		Preorder(first->Sx);
-		Preorder(first->Dx);
+Nodo * merge_list(Nodo * head1, Nodo * head2){
+    int flag = 1;
+    Nodo *newNodo = NULL;
+    Nodo *current1 = head1;
+    Nodo *current2 = head2;
+    while(current1 != NULL || current2 != NULL){
+        if(flag == 1){
+            newNodo = push(newNodo, current1->val);
+            current1 = current1->next;
+            flag = 0;
+        }
+        else{
+            newNodo = push(newNodo, current2->val);
+            current2 = current2->next;
+            flag = 1;
+        }
     }
+    return newNodo;
 }
 
-
-void Postorder(Nodo *first){
-	if (first != NULL) {
-		Postorder(first->Sx);
-		Postorder(first->Dx);
-		printf("%d \t", first->dato);
+void merge_list_same(Nodo *head1, Nodo *head2){
+    int flag = 1;
+    while(head1 != NULL || head2 != NULL){
+        if(flag == 1){
+            flag = 0;
+        }
+        else{
+            head1->val = head2->val;
+            head2 = head2->next;
+            flag = 1;
+        }
+        head1 = head1->next;
     }
-}
-
-
-int ContaNodi(Nodo *first){
-	if(first == NULL)
-		return 0;
-	else
-		return(1 + ContaNodi(first->Sx) + ContaNodi(first->Dx));
-}
-
-int ContaFoglie(Nodo *first){
-	if(first == NULL)
-		return(0);
-	else {
-		if ((first->Sx == NULL) && (first->Dx == NULL))
-			return 1;
-		else
-			return((ContaFoglie(first->Sx) + ContaFoglie(first->Dx)));
-	}
-}
-
-int bilanciato(Nodo *first){
-	if (first == NULL)
-		return 1;
-	else {
-		if ((first->Sx == NULL) && first->Dx == NULL)
-			return 1;
-		else {
-			if ((first->Sx != NULL) && (first->Dx != NULL))
-				return(bilanciato(first->Sx) && bilanciato(first->Dx) );
-			else
-				return 0;
-		}
-	}
-}
-
-
-int Ricerca(Nodo *first, int x){
-	if (first == NULL)
-		return 0;
-	else {
-		if (x == first->dato)
-			return 1;
-		else
-			return(Ricerca(first->Sx, x) || Ricerca(first->Dx, x));
-	}
-}
-
-
-int Altezza_Nodo(Nodo *first){
-  int ALTD = 0, ALTS = 0;
-	if (first == NULL)
-		return -1;
-	else {
-		ALTS = Altezza_Nodo(first->Sx);
-		ALTD = Altezza_Nodo(first->Dx);
-		if (ALTS > ALTD)
-			return(ALTS + 1);
-		else
-			return(ALTD + 1);
-	}
-}
-
-Nodo * Ins_Ord(int E, Nodo *first){
-	if (first == NULL) {
-		first = malloc(sizeof(Nodo));
-		first->dato = E;
-		first->Sx = NULL;
-		first->Dx = NULL;
-		return first;
-	}
-	else {
-		if(E < first->dato) {
-			first->Sx = Ins_Ord(E, first->Sx);
-			return first;
-		}
-		else {
-			first->Dx = Ins_Ord(E, first->Dx);
-			return first;
-		}
-	}
-}
-
-int RicercaBinaria(int x, Nodo *first){
-	if (first == NULL)
-		return 0;
-	else {
-		if (x == first->dato)
-			return 1;
-		else {
-			if (x < first->dato)
-				return (RicercaBinaria(x, first->Sx));
-			else
-				return (RicercaBinaria(x, first->Dx));
-		}
-	}
 }
 
 int main(){
-    int n, i;
-    Nodo *root = NULL;
+    int num, i;
+    Nodo *root1 = NULL;
+    Nodo *root2 = NULL;
+    printf("\nCaricamento Lista 1... (inserisci 0 per terminare)");
     for(i = 0; i < 5; i++){
-        printf("Inserire il valore: ");
-        scanf("%d", &n);
-        root = Ins_Ord(root, n);
+        printf("\nInserire il valore: ");
+        scanf("%d", &num);
+        root1 = push(root1, num);
     }
-    Inorder(root);
+    printf("\nCaricamento Lista 2... (inserisci 0 per terminare)");
+    for(i = 0; i < 5; i++){
+        printf("\nInserire il valore: ");
+        scanf("%d", &num);
+        root2 = push(root2, num);
+    }
+    printf("\nStampa stampa lista 1...");
+    print_list(root1);
+    printf("\nStampa stampa lista 2...");
+    print_list(root2);
+
+    printf("\nMerge liste...");
+    Nodo *merge_lista = merge_list(root1, root2);
+    printf("\nStampa lista merge...");
+    print_list(merge_lista);
+
+    printf("\nMerge su lista 1...");
+    merge_list_same(&root1, &root2);
+    printf("\nStampa lista merge su lista 1...");
+    print_list(root1);
+    return 0;
 }

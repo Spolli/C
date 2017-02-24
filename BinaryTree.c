@@ -3,8 +3,8 @@
 
 typedef struct structNodo{
   int dato; //albero di valori interi
-  struct nodo *Dx; //puntatore al sottoalbero destro
-  struct nodo *Sx; //puntatore al sottoalbero sinistro
+  struct structNodo *Dx; //puntatore al sottoalbero destro
+  struct structNodo *Sx; //puntatore al sottoalbero sinistro
 }Nodo;
 
 void Inorder(Nodo *first){
@@ -14,7 +14,6 @@ void Inorder(Nodo *first){
 		Inorder(first->Dx);
     }
 }
-
 
 void Preorder(Nodo *first){
 	if (first != NULL) {
@@ -32,7 +31,6 @@ void Postorder(Nodo *first){
 		printf("%d \t", first->dato);
     }
 }
-
 
 int ContaNodi(Nodo *first){
 	if(first == NULL)
@@ -94,7 +92,8 @@ int Altezza_Nodo(Nodo *first){
 	}
 }
 
-Nodo * Ins_Ord(int E, Nodo *first){
+Nodo *Ins_Ord(int E, Nodo *root){
+    Nodo *first = root;
 	if (first == NULL) {
 		first = malloc(sizeof(Nodo));
 		first->dato = E;
@@ -135,7 +134,7 @@ int main(){
     for(i = 0; i < 5; i++){
         printf("Inserire il valore: ");
         scanf("%d", &n);
-        root = Ins_Ord(root, n);
+        root = Ins_Ord(n, root);
     }
     Inorder(root);
 }

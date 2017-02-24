@@ -8,10 +8,10 @@ void prodVett(int vetS[], int *vetD[], int n){
 	}
 }
 
-int * sommaVett(int vetS[], int *vetD[], int n){
+int * sommaVett(int vetS[], int *vetD, int n){
 	int i;
 	int *vetSomma;
-	vetSomma = (int *)malloc(n * sizeof(int));
+	vetSomma = malloc(n * sizeof(int));
 	for(i = 0; i < n; i++){
 		vetSomma[i] = vetS[i] + vetD[i];
 	}
@@ -26,7 +26,7 @@ void stampaStatica(int vett[], int n){
 	}
 }
 
-void stampaDinamica(int *vett[], int n){
+void stampaDinamica(int *vett, int n){
 	int i;
 	for(i = 0; i < n; i++){
         printf("\n");

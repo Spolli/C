@@ -144,8 +144,6 @@ void printTwoChildren(Nodo *first){
     }
     if(first->Sx != NULL && first->Dx != NULL) {
         printf("\nValore Nodo con 2 figli: %d", first->dato);
-        printTwoChildren(first->Sx);
-        printTwoChildren(first->Dx);
     }
     printTwoChildren(first->Sx);
     printTwoChildren(first->Dx);
@@ -154,11 +152,13 @@ void printTwoChildren(Nodo *first){
 int main(){
     int n, i;
     Nodo *root = NULL;
-    for(i = 0; i < 5; i++){
-        printf("\nInserire il valore: ");
+    printf("\nInserire 0 per terminare il caricamento...");
+    do{
+        printf("\nValore: ");
         scanf("%d", &n);
-        root = Ins_Ord(n, root);
-    }
+        if(n != 0)
+            root = Ins_Ord(n, root);
+    }while(n != 0);
     Inorder(root);
     printf("\nIl numero dei nodi con 2 figli sono = %d", countTwoChildren(root));
     printTwoChildren(root);
